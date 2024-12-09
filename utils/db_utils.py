@@ -18,6 +18,16 @@ def insert_user(username, hashed_password):
         print("Error: Username already exists.")
     finally:
         conn.close()
+
+# A database utility function that fetches a user using a username
+def get_user(username):
+    conn = sqlite3.connect(db_path)
+    cursor = conn.cursor()
+    cursor.execute("SELECT * FROM Users WHERE username = ?", (username,))
+    user = cursor.fetchone()
+    conn.close()
+    return user  # Returns a tuple (user_id, username, hashed_password) or None
+
 # A database utility function that deletes the user from the database using the username.
 def delete_user(username):
     conn = sqlite3.connect(db_path)
@@ -40,6 +50,64 @@ def delete_user(username):
     finally:
         # Close the connection
         conn.close()
+
+
+def add_book_to_library(user_id, book_id, status="To read"):
+    conn = sqlite3.connect(db_path)
+    cursor = conn.cursor()
+    cursor.execute("INSERT INTO User_Library (user_id, book_id, status) VALUES (?, ?, ?)", 
+                   (user_id, book_id, status))
+    conn.commit()
+    conn.close()
+    print(f"Book ID {book_id} added to User ID {user_id}'s library with status '{status}'.")
+
+# Util functions for user library tables
+
+def update_book_status(user_id, book_id, new_status):
+    """
+    Update the status of a book in a user's library.
+
+    :param user_id: The ID of the user
+    :param book_id: The ID of the book
+    :param new_status: The new status (e.g., "Have read", "Favorite")
+    """
+    conn = sqlite3.connect(db_path)
+    cursor = conn.cursor()
+
+    try:
+        # Update the status for the specified user and book
+        cursor.execute("""
+            UPDATE User_Library
+            SET status = ?
+            WHERE user_id = ? AND book_id = ?
+        """, (new_status, user_id, book_id))
+        
+        # Check if any rows were updated
+        if cursor.rowcount > 0:
+            print(f"Status updated to '{new_status}' for User ID {user_id} and Book ID {book_id}.")
+        else:
+            print(f"No record found for User ID {user_id} and Book ID {book_id}.")
+        
+        conn.commit()
+    except sqlite3.Error as e:
+        print(f"Error: {e}")
+    finally:
+        conn.close()
+
+def get_user_library(user_id):
+    conn = sqlite3.connect(db_path)
+    cursor = conn.cursor()
+    cursor.execute("""
+        SELECT b.title, b.author, ul.status
+        FROM Books b
+        JOIN User_Library ul ON b.book_id = ul.book_id
+        WHERE ul.user_id = ?
+    """, (user_id,))
+    library = cursor.fetchall()
+    conn.close()
+    return library  # Returns a list of tuples (title, author, status)
+
+### Book Library util functions
 
 # A database utility function that inserts a book into the book library table using: title of the book, author of the book, and the category of the book.
 def add_book(title, author, category):
@@ -73,6 +141,8 @@ def delete_book(title, author):
     finally:
         # Close the connection
         conn.close()
+
+# General util functions
 
 # A database utility function that prints the content of a specific table using: Table's name, and the database path 
 def print_table_contents(table_name, db_path):
