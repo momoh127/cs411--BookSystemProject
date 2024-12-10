@@ -2,7 +2,7 @@
 
 # how to run: check ls -l setup_env.sh if -rw-r--r-- then chmod +x setup_env.sh then ./setup_env.sh
 # Set the name of the virtual environment directory
-VENV_DIR="booksystem_eenv"
+VENV_DIR="venv"
 REQUIREMENTS_FILE="requirements.txt"
 
 # Check if the virtual environment already exists
