@@ -8,6 +8,12 @@ book_blueprint = Blueprint("books", __name__)
 def search():
     """
     Search for books using the Google Books API.
+
+    Inputs: query (str): Search term.
+
+    Returns: 
+        - API response as JSON with HTTP status 200
+        - error message with corresponding HTTP status code
     """
     query = request.args.get("q")
     if not query:
@@ -20,6 +26,13 @@ def search():
 def details(book_id):
     """
     Fetch details for a specific book using the Google Books API.
+
+    Args: book_id : Google Books ID.
+
+    Returns:
+        - API response as JSON with HTTP status 200
+        - or an error message with corresponding HTTP status code
+
     """
     details = fetch_book_details(book_id)
     return jsonify(details)
@@ -28,6 +41,15 @@ def details(book_id):
 def add_to_library():
     """
     Add a book to the user's library.
+
+    Inputes:
+        user_id
+        book_id
+        status (optional)
+
+    Returns:
+        - Success message with HTTP status 201
+        - error message with HTTP status 400
     """
     data = request.get_json()
     user_id = data.get("user_id")
@@ -47,6 +69,9 @@ def add_to_library():
 def view_library(user_id):
     """
     Retrieve the user's library with book details and statuses.
+
+    Args: user_id
+    
     """
     try:
         library = get_user_library(user_id)  # Fetch library from db_utils
@@ -70,6 +95,11 @@ def view_library(user_id):
 def update_status():
     """
     Update the status of a book in the user's library.
+
+    inputes:
+        - user_id: str
+        - book_id: str
+        - status: str
     """
     data = request.get_json()
     user_id = data.get("user_id")

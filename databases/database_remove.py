@@ -4,6 +4,14 @@ import os
 from database_setup import create_database
 
 def reset_database(db_folder="databases", db_name="books.db"):
+    """
+    Resets the database by ensuring the specified folder exists and the database file is ready for use.
+
+    Args:
+        db_folder (str): The folder where the database will be stored. Default is "databases".
+        db_name (str): The name of the database file. Default is "books.db".
+
+   """
     #ensure folder exists 
     os.makedirs(db_folder, exist_ok=True)
     db_path = os.path.join(db_folder, db_name)

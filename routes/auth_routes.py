@@ -14,8 +14,8 @@ def create_account():
         password: str
 
     Returns: A JSON response of either
-        - succcess message and a HTTPS status 201: 
-        - error message (failed to create the account) and a HTTPS status 400 or 401
+        - succcess message and a HTTP status 201: 
+        - error message (failed to create the account) and a HTTP status 400 or 401
     """
     data = request.get_json()
     username = data.get("username")
@@ -41,8 +41,8 @@ def login():
         password: str
     
     ReturnsA JSON response of either
-        - succcess message, a user ID, and a HTTPS status 200: 
-        - error message (failed to login to the account) and a HTTPS status 400 or 401
+        - succcess message, a user ID, and a HTTP status 200: 
+        - error message (failed to login to the account) and a HTTP status 400 or 401
        
     """
     data = request.get_json()

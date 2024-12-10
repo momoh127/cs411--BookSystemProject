@@ -40,6 +40,7 @@ def reset_test_database():
     conn.close()
 
 def test_insert_and_get_user():
+    """Tests inserting a user into the database and retrieving the user's details."""
     reset_test_database()
     insert_user("testuser", "hashedpassword123")
     user = get_user("testuser")
@@ -48,6 +49,7 @@ def test_insert_and_get_user():
     print("test_insert_and_get_user passed.")
 
 def test_add_and_get_user_library():
+    """ Tests adding a book to a user's library and retrieving the user's library."""
     reset_test_database()
     # Add a user and a book
     insert_user("testuser", "hashedpassword123")
