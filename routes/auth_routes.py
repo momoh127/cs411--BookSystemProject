@@ -16,7 +16,7 @@ def create_account():
     try:
         hashed_password = hash_password(password)
         insert_user(username, hashed_password)
-        return jsonify({"message": "User created successfully!"}), 201
+        return jsonify({"message": "Account created successfully!"}), 201  
     except Exception as e:
         return jsonify({"error": str(e)}), 400
 
@@ -33,4 +33,4 @@ def login():
     if user and verify_password(password, user[2]): 
         return jsonify({"message": "Login successful!", "user_id": user[0]}), 200
     else:
-        return jsonify({"error": "Invalid username or password"}), 401
+        return jsonify({"error": "Invalid username or password."}), 401  

@@ -142,3 +142,22 @@ def get_all_books():
         return books
     finally:
         conn.close()
+
+# Resets the database by clearing all tables.
+def reset_test_database():
+    """
+    Reset the database by clearing all data in the tables.
+    """
+    conn = get_connection()
+    cursor = conn.cursor()
+    try:
+        # Clear all data from the tables
+        cursor.execute("DELETE FROM User_Library;")
+        cursor.execute("DELETE FROM Books;")
+        cursor.execute("DELETE FROM Users;")
+        conn.commit()
+        print("Test database reset successfully!")
+    except sqlite3.Error as e:
+        print(f"Error resetting database: {e}")
+    finally:
+        conn.close()

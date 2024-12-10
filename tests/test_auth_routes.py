@@ -1,57 +1,69 @@
-import unittest
+import sys
+import os
+import pytest
+
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 from app import app
 from utils.db_utils import reset_test_database
+from utils.auth_utils import hash_password, verify_password
 
+@pytest.fixture
+def client():
+    """
+    Fixture to provide a test client for the Flask app.
+    """
+    with app.test_client() as client:
+        yield client
 
-class TestAuthRoutes(unittest.TestCase):
-    def setUp(self):
-        """
-        Set up the test client and reset the test database.
-        """
-        self.client = app.test_client()
-        reset_test_database()
+def setup_module(module):
+    """
+    Reset the database before running tests.
+    """
+    reset_test_database()
 
-    def test_create_account(self):
-        """
-        Test the /auth/create-account endpoint.
-        """
-        response = self.client.post("/auth/create-account", json={
-            "username": "testuser",
-            "password": "securepassword123"
-        })
-        self.assertEqual(response.status_code, 201)
-        self.assertIn("User created successfully", response.get_json().get("message"))
+def test_create_account(client):
+    """
+    Test the /auth/create-account route.
+    """
+    payload = {"username": "testuser", "password": "securepassword123"}
+    response = client.post("/auth/create-account", json=payload)
+    assert response.status_code == 201
+    data = response.get_json()
+    assert "message" in data
+    assert data["message"] == "Account created successfully!"
 
-    def test_login_success(self):
-        """
-        Test successful login for a user.
-        """
-        # First, create the account
-        self.client.post("/auth/create-account", json={
-            "username": "testuser",
-            "password": "securepassword123"
-        })
+def test_duplicate_account(client):
+    """
+    Test creating a duplicate account with the same username.
+    """
+    payload = {"username": "testuser", "password": "securepassword123"}
+    response = client.post("/auth/create-account", json=payload)
+    assert response.status_code == 400
+    data = response.get_json()
+    assert "error" in data
+    assert data["error"] == "Username already exists."
 
-        # Then, attempt login
-        response = self.client.post("/auth/login", json={
-            "username": "testuser",
-            "password": "securepassword123"
-        })
-        self.assertEqual(response.status_code, 200)
-        self.assertIn("Login successful", response.get_json().get("message"))
+def test_login_success(client):
+    """
+    Test successful login using /auth/login route.
+    """
+    payload = {"username": "testuser", "password": "securepassword123"}
+    response = client.post("/auth/login", json=payload)
+    assert response.status_code == 200
+    data = response.get_json()
+    assert "message" in data
+    assert data["message"] == "Login successful!"
 
-    def test_login_failure(self):
-        """
-        Test failed login due to incorrect credentials.
-        """
-        # Attempt login without creating the user
-        response = self.client.post("/auth/login", json={
-            "username": "nonexistentuser",
-            "password": "wrongpassword"
-        })
-        self.assertEqual(response.status_code, 401)
-        self.assertIn("Invalid username or password", response.get_json().get("error"))
-
+def test_login_failure(client):
+    """
+    Test login failure due to incorrect password.
+    """
+    payload = {"username": "testuser", "password": "wrongpassword"}
+    response = client.post("/auth/login", json=payload)
+    assert response.status_code == 401
+    data = response.get_json()
+    assert "error" in data
+    assert data["error"] == "Invalid username or password."
 
 if __name__ == "__main__":
-    unittest.main()
+    pytest.main(["-v", "tests/test_auth_routes.py"])
