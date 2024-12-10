@@ -6,6 +6,17 @@ auth_blueprint = Blueprint("auth", __name__)
 
 @auth_blueprint.route("/create-account", methods=["POST"])
 def create_account():
+    """
+    Creates a new user account with a username and password.
+
+    Inputs:
+        username: str
+        password: str
+
+    Returns: A JSON response of either
+        - succcess message and a HTTPS status 201: 
+        - error message (failed to create the account) and a HTTPS status 400 or 401
+    """
     data = request.get_json()
     username = data.get("username")
     password = data.get("password")
@@ -22,6 +33,18 @@ def create_account():
 
 @auth_blueprint.route("/login", methods=["POST"])
 def login():
+    """
+    Allows user to login to their account after providing the username and password
+    
+    Inputs:
+        username: str
+        password: str
+    
+    ReturnsA JSON response of either
+        - succcess message, a user ID, and a HTTPS status 200: 
+        - error message (failed to login to the account) and a HTTPS status 400 or 401
+       
+    """
     data = request.get_json()
     username = data.get("username")
     password = data.get("password")
