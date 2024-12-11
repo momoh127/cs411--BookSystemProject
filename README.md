@@ -312,6 +312,7 @@ To ensure the application is functioning correctly, a **smoketest.sh** script is
    # check_db
 
 
-## Conclusion:
+#### Conclusion:
 
-This Personalized Book System allows users to efficiently manage their book collection, track their reading progress, and access detailed information about books from the Google Books API. With Docker integration, you can ensure consistent and portable environments for development, testing, and production. Additionally, the smoketest script ensures that the application functions as expected after deployment.
+This Personalized Book System allows users to efficiently manage their book collection, track their reading progress, 
+and access detailed information about books from the Google Books API. With Docker integration, you can ensure consistent and portable environments for development, testing, and production. Additionally, the smoketest script ensures that the application functions as expected after deployment.
