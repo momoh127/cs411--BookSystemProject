@@ -188,6 +188,8 @@ Docker provides a way to package your application and its dependencies into a co
 - Docker installed on your machine.
 - Clone this repository.
 
+---
+
 ### Building and Running the Docker Image:
 
 #### Build the Docker image:
@@ -235,11 +237,13 @@ If you want to remove the volumes associated with the container (for example, to
 ```bash
 docker volume prune
 
+---
 
 ### **Smoketest Script**
 To ensure the application is functioning correctly, a **smoketest.sh** script is included. This script tests core functionalities like health checks, database connectivity, and essential API routes.
 
-#### **Usage:**
+
+#### **Usage:
 
 1. **Make the script executable:**
    ```bash
@@ -310,6 +314,8 @@ To ensure the application is functioning correctly, a **smoketest.sh** script is
    # Uncomment to test only database and health routes
    # check_health
    # check_db
+
+---
 
 ## Conclusion:
 
