@@ -1,3 +1,4 @@
+import logging
 from flask import Flask, g
 from routes.auth_routes import auth_blueprint
 from routes.book_routes import book_blueprint
@@ -6,6 +7,7 @@ from config import SECRET_KEY
 import os
 import sqlite3
 
+# Initialize the Flask app
 app = Flask(__name__)
 
 # Set the secret key for session management
@@ -15,6 +17,17 @@ app.config["SECRET_KEY"] = SECRET_KEY
 DATABASE_PATH = os.path.join("databases", "books.db")
 create_database()
 
+# Configure logging
+logging.basicConfig(
+    level=logging.INFO,  # Set to DEBUG for more detailed logs
+    format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
+    handlers=[
+        logging.FileHandler("app.log"),  # Log to a file
+        logging.StreamHandler()         # Log to the console
+    ]
+)
+app.logger.info("Starting the Personalized Book System API...")
+
 def get_db():
     """
     Opens a new database connection if there is none yet for the current application context.
@@ -22,6 +35,7 @@ def get_db():
     if "db" not in g:
         g.db = sqlite3.connect(DATABASE_PATH)
         g.db.row_factory = sqlite3.Row  # Optional: To return rows as dictionaries
+        app.logger.info("Database connection opened.")
     return g.db
 
 @app.teardown_appcontext
@@ -33,9 +47,9 @@ def close_db(exception):
 
     if db is not None:
         db.close()
+        app.logger.info("Database connection closed.")
 
-
-# for authentication and book-related routes
+# Register authentication and book-related routes
 app.register_blueprint(auth_blueprint, url_prefix="/auth")
 app.register_blueprint(book_blueprint, url_prefix="/books")
 
@@ -44,7 +58,11 @@ def index():
     """
     Home route for testing the API.
     """
+    app.logger.info("Home route accessed.")
     return {"message": "Welcome to the Personalized Book System API!"}, 200
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    try:
+        app.run(debug=True)
+    except Exception as e:
+        app.logger.error(f"An error occurred while running the app: {str(e)}")
