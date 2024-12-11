@@ -493,3 +493,30 @@ Example Response:
 
 
 
+Dockerfile: 
+
+Docker provides a way to package your application and its dependencies into a container. Containers ensure consistent and portable environments across development, testing, and production.
+
+Prerequisites:
+docker installed on your machine.
+clone this repository 
+
+Building and Running the Docker Image:
+
+Building docker image: 
+docker buildx build booksystemdockerfile -t flask-app .
+
+Running the container:
+docker run -p 5000:5000 --env-file apikeys.env flask-app
+
+Once the container is running, you can access the application at: http://localhost:5000/
+
+Common Issues:
+
+Port Already in Use: Ensure no other application is using port 5000 and change the mapping if needed with: 
+docker run -p 8080:5000 --env-file apikeys.env flask-app
+
+Database Not Persisting: Mount a volume for the database to persist:
+docker run -v $(pwd)/databases:/app/databases -p 5000:5000 --env-file apikeys.env flask-app
+
+
