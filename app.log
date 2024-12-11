@@ -1,3 +1,32 @@
 2024-12-10 20:55:51,457 - app - INFO - Starting the Personalized Book System API...
 2024-12-10 20:55:51,474 - werkzeug - WARNING -  * Debugger is active!
 2024-12-10 20:55:51,478 - werkzeug - INFO -  * Debugger PIN: 740-520-750
+2024-12-10 21:13:43,068 - werkzeug - INFO -  * Detected change in '/Users/mohamedmohamed/Desktop/cs411--BookSystemProject/app.py', reloading
+2024-12-10 21:13:43,256 - app - INFO - Starting the Personalized Book System API...
+2024-12-10 21:13:43,274 - werkzeug - WARNING -  * Debugger is active!
+2024-12-10 21:13:43,279 - werkzeug - INFO -  * Debugger PIN: 740-520-750
+2024-12-10 21:13:57,670 - werkzeug - INFO -  * Detected change in '/Users/mohamedmohamed/Desktop/cs411--BookSystemProject/app.py', reloading
+2024-12-10 21:13:57,871 - app - INFO - Starting the Personalized Book System API...
+2024-12-10 21:13:57,887 - werkzeug - WARNING -  * Debugger is active!
+2024-12-10 21:13:57,891 - werkzeug - INFO -  * Debugger PIN: 740-520-750
+2024-12-10 21:14:02,009 - werkzeug - INFO -  * Detected change in '/Users/mohamedmohamed/Desktop/cs411--BookSystemProject/app.py', reloading
+2024-12-10 21:14:02,132 - app - INFO - Starting the Personalized Book System API...
+2024-12-10 21:14:02,146 - werkzeug - WARNING -  * Debugger is active!
+2024-12-10 21:14:02,149 - werkzeug - INFO -  * Debugger PIN: 740-520-750
+2024-12-10 21:14:12,485 - werkzeug - INFO -  * Detected change in '/Users/mohamedmohamed/Desktop/cs411--BookSystemProject/app.py', reloading
+2024-12-10 21:14:12,658 - app - INFO - Starting the Personalized Book System API...
+2024-12-10 21:14:12,677 - werkzeug - WARNING -  * Debugger is active!
+2024-12-10 21:14:12,681 - werkzeug - INFO -  * Debugger PIN: 740-520-750
+2024-12-10 21:17:18,940 - app - INFO - Starting the Personalized Book System API...
+2024-12-10 21:17:18,965 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2024-12-10 21:17:18,965 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2024-12-10 21:17:18,965 - werkzeug - INFO -  * Restarting with stat
+2024-12-10 21:17:19,065 - app - INFO - Starting the Personalized Book System API...
+2024-12-10 21:17:19,077 - werkzeug - WARNING -  * Debugger is active!
+2024-12-10 21:17:19,082 - werkzeug - INFO -  * Debugger PIN: 740-520-750
+2024-12-10 21:18:07,696 - werkzeug - INFO -  * Detected change in '/Users/mohamedmohamed/Desktop/cs411--BookSystemProject/app.py', reloading
+2024-12-10 21:18:07,726 - werkzeug - INFO -  * Restarting with stat
+2024-12-10 21:18:07,881 - app - INFO - Starting the Personalized Book System API...
+2024-12-10 21:18:07,897 - werkzeug - WARNING -  * Debugger is active!
+2024-12-10 21:18:07,901 - werkzeug - INFO -  * Debugger PIN: 740-520-750

@@ -10,7 +10,6 @@ import sqlite3
 # Initialize the Flask app
 app = Flask(__name__)
 
-# Set the secret key for session management
 app.config["SECRET_KEY"] = SECRET_KEY
 
 # Path to the SQLite database file
@@ -19,11 +18,11 @@ create_database()
 
 # Configure logging
 logging.basicConfig(
-    level=logging.INFO,  # Set to DEBUG for more detailed logs
+    level=logging.INFO,  
     format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
     handlers=[
-        logging.FileHandler("app.log"),  # Log to a file
-        logging.StreamHandler()         # Log to the console
+        logging.FileHandler("app.log"), 
+        logging.StreamHandler()         
     ]
 )
 app.logger.info("Starting the Personalized Book System API...")
@@ -48,6 +47,30 @@ def close_db(exception):
     if db is not None:
         db.close()
         app.logger.info("Database connection closed.")
+
+# Health check route
+@app.route("/health", methods=["GET"])
+def health_check():
+    """
+    Health check route to verify the service is running.
+    """
+    app.logger.info("Health check passed.")
+    return {"status": "healthy"}, 200
+
+# Database health check route
+@app.route("/db-check", methods=["GET"])
+def db_check():
+    """
+    Database health check route to verify connectivity.
+    """
+    try:
+        db = get_db()
+        db.execute("SELECT 1")  
+        app.logger.info("Database check passed.")
+        return {"database_status": "healthy"}, 200
+    except Exception as e:
+        app.logger.error(f"Database check failed: {str(e)}")
+        return {"database_status": "unhealthy", "error": str(e)}, 500
 
 # Register authentication and book-related routes
 app.register_blueprint(auth_blueprint, url_prefix="/auth")
